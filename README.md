@@ -6,6 +6,7 @@ Steps:
 3. Fill all the field for creating the app. Go to tue app settin and copy consumer key, consumer secrete, access token & access token secret and paste them in #config.ini file.
 
 4.Install thre required libraries:pip install -r requirements.txt
+
 5.Download corpora:
 
 python -m textblob.download_corpora
