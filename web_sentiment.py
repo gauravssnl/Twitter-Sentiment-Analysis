@@ -1,6 +1,7 @@
 import tweepy
-from textblob import TextBlob
 import  re
+import urllib.request
+import  urllib.parse
 
 print("Twitter Sentiment Analysis ")
 settings = {}
@@ -17,21 +18,19 @@ auth.set_access_token(settings['access_token'], settings['access_token_secret'])
 api=tweepy.API(auth)
 query = input("Enter hastag to search:")
 print("_"*40)
-count = 10
+count = 20
 fetched_tweets = api.search(q=query, count=count)
 for tweet in fetched_tweets:
 	text = tweet.text
-	print(text)
+	text = text.replace("RT", " ")
+	print("Tweet: " +text)
 	"""Utility function to clean tweet text by removing links, special characters
         using simple regex statements.  """
 	text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
 	print("New text: "+ text)
-	analysis = TextBlob(text)
-	print(analysis.sentiment)
-	if analysis.sentiment.polarity == 0:
-		print("Sentiment: Neutral")
-	elif analysis.sentiment.polarity > 0:
-		print("Sentiment: Positive")
-	else:
-		print("Sentiment: Negative")
+	data = urllib.parse.urlencode({"text": text})
+	u= urllib.request.urlopen("http://text-processing.com/api/sentiment/", data.encode())
+	res = u.read().decode()
+	print( res)
+	print("Sentiment: " + eval(res)['label'])
 	print("_"*40)
