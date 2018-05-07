@@ -1,8 +1,9 @@
 import os
 import tweepy
-from textblob import TextBlob
 import re
-
+import urllib.request
+import urllib.parse
+import json
 
 CONSUMER_KEY = os.environ.get('TWITTER_CONSUMER_KEY')
 CONSUMER_SECRET = os.environ.get('TWITTER_CONSUMER_SECRET')
@@ -41,13 +42,37 @@ def analyse(tweet):
         re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
     msg = "New text : " + text
     data.append(msg)
-    analysis = TextBlob(text)
-    # print(analysis.sentiment)
-    if analysis.sentiment.polarity == 0:
-        msg = "Sentiment : Neutral"
-    elif analysis.sentiment.polarity > 0:
-        msg = "Sentiment : Positive"
-    else:
-        msg = "Sentiment : Negative"
-    data.append(msg)
+    parameters = urllib.parse.urlencode({"text": text})
+    req = urllib.request.urlopen(
+        "http://text-processing.com/api/sentiment/", parameters.encode())
+    result = req.read().decode()
+    # print(result)
+    result = json.loads(result)
+    data.append(result)
+    data.append("Sentiment: " + result['label'])
+    # print(sentiment)
+    # print(data)
     return data
+
+
+def analyse_string(string):
+    data = []
+    msg = "Text: " + string
+    data.append(msg)
+    parameters = urllib.parse.urlencode({"text": string})
+    req = urllib.request.urlopen(
+        "http://text-processing.com/api/sentiment/", parameters.encode())
+    result = req.read().decode()
+    # print(result)
+    result = json.loads(result)
+    data.append(result)
+    data.append("Sentiment: " + result['label'])
+    # print(sentiment)
+    # print(data)
+    return data
+
+
+if __name__ == '__main__':
+    tweets = get_tweets(query="India", count=1)
+    for tweet in tweets:
+        analyse(tweet)

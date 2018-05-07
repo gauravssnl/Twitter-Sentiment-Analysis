@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Twitter Sentiment Analysis - Result{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello!</h1>
+</div>
+<div>
+	 <h2>{%if string %}Text: {{ string }}{% else %}Empty Text{% endif %} </h2>
+	 
+</div>
+<div>
+	 {%if string %} 
+	 <hr>
+	 	
+	 		<h3>
+	 			{% for msg in analyse(string) %}
+	 				{{ msg }} <br/>
+	 			{% endfor %}
+	 		</h3> 
+	 	
+	 {% else %}Empty Hashtag and zero limit
+	 {% endif %} 
+	 <hr>
+</div>
+
+{% endblock %}
