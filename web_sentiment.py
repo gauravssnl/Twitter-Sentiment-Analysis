@@ -1,7 +1,9 @@
+import os
+import sys 
 import tweepy
-import  re
+import re
 import urllib.request
-import  urllib.parse
+import urllib.parse
 
 print("Twitter Sentiment Analysis ")
 settings = {}
