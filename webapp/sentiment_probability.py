@@ -1,6 +1,7 @@
 import os
 import tweepy
 import re
+import sys
 import urllib.request
 import urllib.parse
 import json
@@ -11,7 +12,7 @@ ACCESS_TOKEN = os.environ.get('TWITTER_ACCESS_TOKEN')
 ACCESS_TOKEN_SECRET = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
 #print(CONSUMER_KEY,CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-
+# create def get_tweets(query, count):
 def get_tweets(query, count):
     #print("Twitter Sentiment Analysis ")
 
@@ -26,7 +27,7 @@ def get_tweets(query, count):
     fetched_tweets = api.search(q=query, count=count)
     return fetched_tweets
 
-
+# create def analyse(tweet):
 def analyse(tweet):
     data = []
     text = tweet.text
@@ -54,7 +55,7 @@ def analyse(tweet):
     # print(data)
     return data
 
-
+# create def analyse_string(string):
 def analyse_string(string):
     data = []
     msg = "Text: " + string
