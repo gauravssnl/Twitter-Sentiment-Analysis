@@ -1,6 +1,6 @@
 import tweepy
 from textblob import TextBlob
-import  re
+import re
 
 print("Twitter Sentiment Analysis ")
 settings = {}
