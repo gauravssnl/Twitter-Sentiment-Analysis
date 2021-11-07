@@ -1,8 +1,11 @@
 import tweepy
 from textblob import TextBlob
-import  re
+import re
+import os
+import sys 
+import string
 
-print("Twitter Sentiment Analysis ")
+print("Twitter Sentiment Analysis ") # your text
 settings = {}
 config = "config.ini"
 with open(config) as f:
